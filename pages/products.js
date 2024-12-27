@@ -5,8 +5,10 @@ import axios from "axios";
 
 export default function Products() {
   const [products,setProducts] = useState([]);
+  console.log('products:', products);
   useEffect(() => {
     axios.get('/api/products').then(response => {
+      console.log('API response:', response.data);
       setProducts(response.data);
     });
   }, []);
