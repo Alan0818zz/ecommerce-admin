@@ -6,18 +6,17 @@ export default async function handle(req, res) {
       if (req.query?.id) {
         const response = await fetch(`${YOUR_API_BASE_URL}/products/${req.query.id}`);
         if (!response.ok) {
-          // console.error('API Error:', response.status);
-          // throw new Error(`HTTP error! status: ${response.status}`);
+          console.error('API Error: ID', response.status);
         }
         const data = await response.json();
         res.json(data);
       } else {
         const response = await fetch(`${YOUR_API_BASE_URL}/products`);
         if (!response.ok) {
-          console.error('API Error:', response.status);
-          throw new Error(`HTTP error! status: ${response.status}`);
+          console.error('API Error: no id', response.status);
         }
         const data = await response.json();
+        //console.log('products:', data);
         res.json(data);
       }
     }

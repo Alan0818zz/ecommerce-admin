@@ -25,6 +25,7 @@ export default function ProductForm({
   const router = useRouter();
   useEffect(() => {
     axios.get('/api/categories').then(result => {
+      console.log('Categories data:', result.data);
       setCategories(result.data);
     })
   }, []);
@@ -67,25 +68,6 @@ export default function ProductForm({
   function updateImagesOrder(images) {
     setImage(images);
   }
-  // function setProductProp(propName,value) {
-  //   setProductProperties(prev => {
-  //     const newProductProps = {...prev};
-  //     newProductProps[propName] = value;
-  //     return newProductProps;
-  //   });
-  // }
-
-  // const propertiesToFill = [];
-  // if (categories.length > 0 && category) {
-  //   let catInfo = categories.find(({_id}) => _id === category);
-  //   propertiesToFill.push(...catInfo.properties);
-  //   while(catInfo?.parent?._id) {
-  //     const parentCat = categories.find(({_id}) => _id === catInfo?.parent?._id);
-  //     propertiesToFill.push(...parentCat.properties);
-  //     catInfo = parentCat;
-  //   }
-  // }
-
   return (
       <form onSubmit={saveProduct}>
         <label>Product name</label>
@@ -99,7 +81,7 @@ export default function ProductForm({
                 onChange={ev => setCategory(ev.target.value)}>
           <option value="">Uncategorized</option>
           {categories.length > 0 && categories.map(c => (
-              <option key={c._id} value={c._id}>{c.name}</option>
+              <option key={c.categoryId} value={c.categoryId}>{c.categoryName}</option>
           ))}
         </select>
         {/*{propertiesToFill.length > 0 && propertiesToFill.map(p => (*/}
