@@ -137,7 +137,7 @@ function Categories({swal}) {
                           onClick={() => editCategory(category)}
                           className="btn-default mr-1"
                       >
-                        Edit
+                        Edits
                       </button>
                       <button
                           onClick={() => deleteCategory(category)}
