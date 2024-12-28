@@ -62,11 +62,11 @@ export default async function handle(req, res) {
         const response = await fetch(`${YOUR_API_BASE_URL}/products/${req.query.id}`, {
           method: 'DELETE'
         });
+        const data = await response.text();  // 使用 text() 因為後端返回的是字串
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(data);  // 使用後端返回的錯誤訊息
         }
-        const data = await response.json();
-        res.json(data);
+        res.json({ message: data });  // 包裝成 JSON 格式返回
       }
     }
   } catch (error) {

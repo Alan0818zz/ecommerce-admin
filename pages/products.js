@@ -7,7 +7,6 @@ export default function Products() {
   const [products,setProducts] = useState([]);
   useEffect(() => {
     axios.get('/api/products').then(response => {
-      //console.log(response.data);
       setProducts(response.data);
     });
   }, []);
@@ -23,7 +22,7 @@ export default function Products() {
         </thead>
         <tbody>
           {products.map(product => (
-            <tr key={product._id}>
+            <tr key={product.id}>
               <td>{product.productName}</td>
               <td>
                 <Link className="btn-default" href={'/products/edit/'+product.id}>

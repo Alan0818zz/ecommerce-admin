@@ -5,7 +5,7 @@ import Spinner from "@/components/Spinner";
 import {ReactSortable} from "react-sortablejs";
 
 export default function ProductForm({
-  _id,
+  id,
   productName:existingTitle,
   description:existingDescription,
   price:existingPrice,
@@ -15,7 +15,7 @@ export default function ProductForm({
 }) {
   const [productName,setProductName] = useState(existingTitle || '');
   const [description,setDescription] = useState(existingDescription || '');
-  const [category,setCategory] = useState(assignedCategory || '');
+  const [category,setCategory] = useState(assignedCategory?.categoryName.toString() || '');
   const [price,setPrice] = useState(existingPrice || '');
   const [image,setImage] = useState(existingImages || '');
   const [stock,setStock] = useState(existingStock || 0);
@@ -25,7 +25,6 @@ export default function ProductForm({
   const router = useRouter();
   useEffect(() => {
     axios.get('/api/categories').then(result => {
-      console.log('Categories data:', result.data);
       setCategories(result.data);
     })
   }, []);
@@ -38,12 +37,12 @@ export default function ProductForm({
       stock: Number(stock),
       image,
       category: {
-        categoryId: 1
+          categoryId: Number(category)  // 直接使用 category，它已經是 ID 了
       }
     };
-    if (_id) {
+    if (id) {
       //update
-      await axios.put('/api/products', {...data,_id});
+      await axios.put('/api/products', {...data,id});
     } else {
       //create
         await axios.post('/api/products', data);
@@ -69,6 +68,7 @@ export default function ProductForm({
     setImage(images);
   }
   return (
+
       <form onSubmit={saveProduct}>
         <label>Product name</label>
         <input
@@ -81,25 +81,10 @@ export default function ProductForm({
                 onChange={ev => setCategory(ev.target.value)}>
           <option value="">Uncategorized</option>
           {categories.length > 0 && categories.map(c => (
-              <option key={c.categoryId} value={c.categoryId}>{c.categoryName}</option>
+              <option key={c.categoryId} value={c.categoryName}
+              >{c.categoryName}</option>
           ))}
         </select>
-        {/*{propertiesToFill.length > 0 && propertiesToFill.map(p => (*/}
-        {/*  <div key={p.name} className="">*/}
-        {/*    <label>{p.name[0].toUpperCase()+p.name.substring(1)}</label>*/}
-        {/*    <div>*/}
-        {/*      <select value={productProperties[p.name]}*/}
-        {/*              onChange={ev =>*/}
-        {/*                setProductProp(p.name,ev.target.value)*/}
-        {/*              }*/}
-        {/*      >*/}
-        {/*        {p.values.map(v => (*/}
-        {/*          <option key={v} value={v}>{v}</option>*/}
-        {/*        ))}*/}
-        {/*      </select>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*))}*/}
         <label>
           Photos
         </label>

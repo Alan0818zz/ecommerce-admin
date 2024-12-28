@@ -14,7 +14,7 @@ export default function DeleteProductPage() {
     axios.get('/api/products?id='+id).then(response => {
       setProductInfo(response.data);
     });
-  }, [id]);
+  }, [id]); // 依賴陣列中包含 id，當 id 改變時會重新執行
   function goBack() {
     router.push('/products');
   }
