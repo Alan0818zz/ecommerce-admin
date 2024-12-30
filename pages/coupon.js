@@ -20,7 +20,7 @@ function Coupons({swal}) {
     }, [])
 
     function fetchCoupons() {
-        axios.get('/api/coupons').then(result => {
+        axios.get('/api/coupon').then(result => {
             setCoupons(result.data);
         });
     }
@@ -45,10 +45,10 @@ function Coupons({swal}) {
         try {
             if (editedCoupon) {
                 data.couponCodeId = editedCoupon.couponCodeId;
-                await axios.put('/api/coupons', data);
+                await axios.put('/api/coupon', data);
                 setEditedCoupon(null);
             } else {
-                await axios.post('/api/coupons', data);
+                await axios.post('/api/coupon', data);
             }
             setName('');
             setDiscount('');
@@ -88,7 +88,7 @@ function Coupons({swal}) {
             if (result.isConfirmed) {
                 const {couponCodeId} = coupon;
                 try {
-                    await axios.delete('/api/coupons?id='+couponCodeId);
+                    await axios.delete('/api/coupon?id='+couponCodeId);
                     fetchCoupons();
                 } catch (error) {
                     swal.fire({
