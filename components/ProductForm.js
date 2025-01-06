@@ -37,7 +37,7 @@ export default function ProductForm({
       stock: Number(stock),
       image,
       category: {
-          categoryId: Number(category)  // 直接使用 category，它已經是 ID 了
+          categoryId: Number(categories.find(c => c.categoryName === category)?.categoryId),
       }
     };
     if (id) {
@@ -128,7 +128,7 @@ export default function ProductForm({
             value={description}
             onChange={ev => setDescription(ev.target.value)}
         />
-        <label>Price (in USD)</label>
+        <label>Price</label>
         <input
             type="number" placeholder="price"
             value={price}
